@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe Route do
-  describe 'the factory' do
+  describe 'factory' do
     it 'works' do
       expect { create :route }.not_to raise_error
     end

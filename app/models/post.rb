@@ -3,5 +3,7 @@ class Post < ActiveRecord::Base
 
   has_and_belongs_to_many :routes
 
-  validates :start, :end, :text, presence: true
+  validates :start_datetime, :end_datetime, :text, presence: true
+  validates :short_text, length: { maximum: 140 }
+  validates :facebook_post_id, :twitter_post_id, uniqueness: true
 end

@@ -11,15 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151207225216) do
+ActiveRecord::Schema.define(version: 20151207232414) do
 
   create_table "posts", force: :cascade do |t|
-    t.datetime "start"
-    t.datetime "end"
     t.text     "text",             limit: 65535
     t.string   "short_text",       limit: 255
     t.integer  "facebook_post_id", limit: 4
     t.integer  "twitter_post_id",  limit: 4
+    t.datetime "start_datetime"
+    t.datetime "end_datetime"
   end
 
   create_table "routes", force: :cascade do |t|

@@ -5,4 +5,5 @@ class Route < ActiveRecord::Base
 
   validates :name, :number, :property, presence: true
   validates :property, inclusion: { in: PROPERTIES }
+  validates :name, :number, uniqueness: true
 end
