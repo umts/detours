@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151207232414) do
+ActiveRecord::Schema.define(version: 20151207235603) do
 
   create_table "posts", force: :cascade do |t|
     t.text     "text",             limit: 65535
@@ -20,6 +20,13 @@ ActiveRecord::Schema.define(version: 20151207232414) do
     t.integer  "twitter_post_id",  limit: 4
     t.datetime "start_datetime"
     t.datetime "end_datetime"
+  end
+
+  create_table "posts_routes", force: :cascade do |t|
+    t.integer  "post_id",    limit: 4
+    t.integer  "route_id",   limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "routes", force: :cascade do |t|
