@@ -16,6 +16,9 @@ Metrics/MethodLength:
 Rails/Date:
   Enabled: false
 
+Rails/HasAndBelongsToMany:
+  Enabled: false
+
 Style/Documentation:
   Enabled: false
 
