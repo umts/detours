@@ -34,7 +34,7 @@ class Post < ActiveRecord::Base
   end
 
   def ended?
-    end_datetime < DateTime.current
+    end_datetime.try :<, DateTime.current
   end
 
   def route_numbers

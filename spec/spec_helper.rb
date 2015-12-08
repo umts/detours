@@ -25,6 +25,24 @@ RSpec.configure do |config|
   end
 end
 
+def stub_social_media_requests(&block)
+  stub_social_media_requests!
+  block.call
+  unstub_social_media_requests!
+end
+
+def stub_social_media_requests!
+  allow_any_instance_of(Post).to receive :twitter_change!
+  allow_any_instance_of(Post).to receive :twitter_end!
+  allow_any_instance_of(Post).to receive :twitter_start!
+end
+
+def unstub_social_media_requests!
+  allow_any_instance_of(Post).to receive(:twitter_change!).and_call_original
+  allow_any_instance_of(Post).to receive(:twitter_end!).and_call_original
+  allow_any_instance_of(Post).to receive(:twitter_start!).and_call_original
+end
+
 def when_current_user_is(user)
   session[:user_id] = case user
                       when User
