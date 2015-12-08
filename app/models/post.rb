@@ -1,4 +1,6 @@
 class Post < ActiveRecord::Base
+  include SocialMedia
+
   has_paper_trail
 
   has_and_belongs_to_many :routes
@@ -19,7 +21,29 @@ class Post < ActiveRecord::Base
 
   scope :upcoming, -> { where 'start_datetime > ?', DateTime.current }
 
+  def current?
+    (start_datetime.nil? || start_datetime <= DateTime.current) &&
+    (end_datetime.nil? || end_datetime >= DateTime.current)
+  end
+
   def route_numbers
     routes.pluck(:number).sort.join ', '
+  end
+
+  # TODO: decide if we actually want to delete tweets
+  def twitter_change!
+    tweet = twitter_client.status twitter_post_id
+    client.destroy_status tweet
+    tweet_start!
+  end
+
+  def twitter_end!
+    tweet = twitter_client.update short_ending_text
+    update ending_twitter_post_id: tweet.id
+  end
+
+  def twitter_start!
+    tweet = twitter_client.update short_text
+    update twitter_post_id: tweet.id
   end
 end
