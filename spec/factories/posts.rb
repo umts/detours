@@ -1,7 +1,5 @@
 FactoryGirl.define do
   factory :post do
-    start_datetime DateTime.current
-    end_datetime 1.day.since.to_datetime
     sequence(:text) { |n| "Post #{n}" }
     sequence :facebook_post_id
     sequence :twitter_post_id

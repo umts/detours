@@ -34,4 +34,23 @@ describe PostsController do
       end
     end
   end
+
+  describe 'GET #new' do
+    before :each do
+      when_current_user_is :whoever
+    end
+    let :submit do
+      get :new
+    end
+    it 'populates the routes variable with ordered routes' do
+      expect(Route).to receive(:order)
+        .with(:property, :number).and_return 'whatever'
+      submit
+      expect(assigns.fetch :routes).to eql 'whatever'
+    end
+    it 'renders the new template' do
+      submit
+      expect(response).to render_template :new
+    end
+  end
 end
