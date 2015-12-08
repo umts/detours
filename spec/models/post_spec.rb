@@ -1,6 +1,14 @@
 require 'rails_helper'
 
 describe Post do
+  # Stub out Twitter API requests for all post specs
+  before :each do
+    allow_any_instance_of(Post).to receive :twitter_change!
+    allow_any_instance_of(Post).to receive :twitter_end!
+    allow_any_instance_of(Post).to receive :twitter_start!
+    allow(Post).to receive :update_twitter!
+  end
+
   describe 'current' do
     before :each do
       @old_post = create :post,
