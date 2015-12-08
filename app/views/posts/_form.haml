@@ -9,19 +9,30 @@
         { include_blank: 'Not route-specific' },
         multiple: true, size: 10
     .field
-      .label= f.label :text
+      .label= f.label :text, 'Generic text'
       = f.text_area :text, placeholder: 'up to 1000 characters',
         cols: 40, rows: 10, required: true
     .field
-      .label= f.label :short_text
+      .label= f.label :short_text, 'Twitter text'
       = f.text_area :short_text, placeholder: 'up to 140 characters',
         maxlength: 140, cols: 40, rows: 3, required: true
+    .explanation 
+      Ending text will be posted on Facebook and Twitter
+      when detours have finished.
     .field
-      .label= f.label :start_datetime, 'Starting'
+      .label= f.label :ending_text
+      = f.text_area :ending_text, placeholder: 'up to 1000 characters',
+        cols: 40, rows: 10, required: true
+    .field
+      .label= f.label :short_ending_text, 'Twitter ending text'
+      = f.text_area :short_ending_text, placeholder: 'up to 140 characters',
+        maxlength: 140, cols: 40, rows: 3, required: true
+    .field
+      .label= f.label :start_datetime, 'Starting at'
       = f.text_field :start_datetime, class: 'datetimepicker',
         size: 50
     .field
-      .label= f.label :end_datetime, 'Ending'
+      .label= f.label :end_datetime, 'Ending at'
       = f.text_field :end_datetime, class: 'datetimepicker',
         size: 50
     .actions

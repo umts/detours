@@ -3,8 +3,10 @@ class Post < ActiveRecord::Base
 
   has_and_belongs_to_many :routes
 
-  validates :text, presence: true
-  validates :short_text, length: { maximum: 140 }
+  validates :text, :ending_text,
+            :short_text, :short_ending_text,
+            presence: true
+  validates :short_text, :short_ending_text, length: { maximum: 140 }
   validates :facebook_post_id, :twitter_post_id,
             uniqueness: true, allow_blank: true
 
