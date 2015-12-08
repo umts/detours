@@ -3,6 +3,9 @@ require 'rails_helper'
 # In this file, rather than globally stubbing out Twitter API requests,
 # we stub them out only in before blocks, so that the call will still be made
 # in the actual specs (so we can explicitly MOCK those).
+#
+# We don't test update_twitter since all it does is call already tested
+# AR scopes or twitter methods.
 
 describe Post do
   describe 'twitter_change!' do
@@ -64,6 +67,4 @@ describe Post do
       expect(@post.twitter_post_id).to eql 100
     end
   end
-
-  describe 'self.update_twitter!'
 end

@@ -33,7 +33,8 @@ class Post < ActiveRecord::Base
   end
 
   def ended?
-    end_datetime.try :<, DateTime.current
+    return false if end_datetime.blank?
+    end_datetime < DateTime.current
   end
 
   def route_numbers
