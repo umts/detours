@@ -1,0 +1,17 @@
+%h1.title Routes
+
+%table#routes
+  %tr
+    %th Name
+    %th Number
+    %th Property
+    %th
+    %th
+  - @routes.each do |route|
+    %tr
+      %td= route.name
+      %td= route.number
+      %td= route.property
+      %td= link_to 'Edit', edit_route_url(route)
+      %td= button_to 'Delete', route_url(route), method: :delete
+= link_to 'New route', new_route_url

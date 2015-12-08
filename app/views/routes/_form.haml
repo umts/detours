@@ -1,0 +1,17 @@
+.form
+  = form_for route,
+    url: { controller: :routes, action: action, id: route.id } do |f|
+    .field
+      .label= f.label :name
+      = f.text_field :name, required: true,
+        size: 50
+    .field
+      .label= f.label :number
+      = f.text_field :number, required: true,
+        size: 10
+    .field
+      .label= f.label :property
+      = f.select :property,
+        options_for_select(Route::PROPERTIES)
+    .actions
+      = f.submit "#{action.capitalize} route"
