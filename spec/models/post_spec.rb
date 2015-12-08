@@ -16,10 +16,28 @@ describe Post do
     let :call do
       Post.current
     end
-    it 'returns only ongoing posts' do
+    it 'returns ongoing posts' do
       expect(call).not_to include @old_post
       expect(call).to include @current_post
       expect(call).not_to include @future_post
+    end
+    it 'returns posts with no start datetime ending after today' do
+      no_start = create :post,
+                        start_datetime: nil,
+                        end_datetime: 1.day.since
+      expect(call).to include no_start
+    end
+    it 'returns posts with no end datetime starting before today' do
+      no_end = create :post,
+                      start_datetime: 1.day.ago,
+                      end_datetime: nil
+      expect(call).to include no_end
+    end
+    it 'returns posts with no start datetime or end datetime' do
+      no_start_or_end = create :post,
+                               start_datetime: nil,
+                               end_datetime: nil
+      expect(call).to include no_start_or_end
     end
   end
   describe 'route_numbers' do
