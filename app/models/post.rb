@@ -1,5 +1,6 @@
+include SocialMedia
+
 class Post < ActiveRecord::Base
-  include SocialMedia
 
   has_paper_trail
 
@@ -13,17 +14,27 @@ class Post < ActiveRecord::Base
             :ending_facebook_post_id, :ending_twitter_post_id,
             uniqueness: true, allow_blank: true
 
+  after_create :twitter_start!, if: :current?
+  after_update :twitter_change!, if: -> { current? && short_text_changed? }
+  after_update :twitter_end!, if: -> { ended? && ending_twitter_post_id.blank? }
+
   scope :current, -> {
     where '(start_datetime is null or start_datetime <= ?) and ' \
           '(end_datetime is null or end_datetime >= ?)',
           DateTime.current, DateTime.current
   }
 
+  scope :ended, -> { where 'end_datetime < ?', DateTime.current }
+
   scope :upcoming, -> { where 'start_datetime > ?', DateTime.current }
 
   def current?
     (start_datetime.nil? || start_datetime <= DateTime.current) &&
     (end_datetime.nil? || end_datetime >= DateTime.current)
+  end
+
+  def ended?
+    end_datetime < DateTime.current
   end
 
   def route_numbers
@@ -45,5 +56,14 @@ class Post < ActiveRecord::Base
   def twitter_start!
     tweet = twitter_client.update short_text
     update twitter_post_id: tweet.id
+  end
+
+  def self.update_twitter!
+    current.where(twitter_post_id: nil).each do |post|
+      post.twitter_start!
+    end
+    ended.where(ending_twitter_post_id: nil).each do |post|
+      post.twitter_end!
+    end
   end
 end
