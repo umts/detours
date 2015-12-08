@@ -11,17 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151208202354) do
+ActiveRecord::Schema.define(version: 20151208210618) do
 
   create_table "posts", force: :cascade do |t|
-    t.text     "text",              limit: 65535
-    t.string   "short_text",        limit: 255
-    t.integer  "facebook_post_id",  limit: 4
-    t.integer  "twitter_post_id",   limit: 4
+    t.text     "text",                    limit: 65535
+    t.string   "short_text",              limit: 255
+    t.integer  "facebook_post_id",        limit: 4
+    t.integer  "twitter_post_id",         limit: 4
     t.datetime "start_datetime"
     t.datetime "end_datetime"
-    t.text     "ending_text",       limit: 65535
-    t.string   "short_ending_text", limit: 255
+    t.text     "ending_text",             limit: 65535
+    t.string   "short_ending_text",       limit: 255
+    t.integer  "ending_facebook_post_id", limit: 4
+    t.integer  "ending_twitter_post_id",  limit: 4
   end
 
   create_table "posts_routes", force: :cascade do |t|

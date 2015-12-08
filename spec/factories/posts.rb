@@ -6,5 +6,7 @@ FactoryGirl.define do
     sequence(:short_ending_text) { |n| "Post short ending text #{n}" }
     sequence :facebook_post_id
     sequence :twitter_post_id
+    sequence :ending_facebook_post_id
+    sequence :ending_twitter_post_id
   end
 end

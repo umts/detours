@@ -8,6 +8,7 @@ class Post < ActiveRecord::Base
             presence: true
   validates :short_text, :short_ending_text, length: { maximum: 140 }
   validates :facebook_post_id, :twitter_post_id,
+            :ending_facebook_post_id, :ending_twitter_post_id,
             uniqueness: true, allow_blank: true
 
   scope :current, -> {
