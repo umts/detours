@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe Post do
-  before :each { stub_social_media_requests }
+  before(:each) { stub_social_media_requests! }
 
   describe 'current' do
     before :each do

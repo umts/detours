@@ -5,7 +5,11 @@ require 'rails_helper'
 # in the actual specs (so we can explicitly MOCK those).
 
 describe Post do
-  describe 'twitter_change!'
+  describe 'twitter_change!' do
+    before :each do
+
+    end
+  end
 
   describe 'twitter_end!'
 
@@ -14,7 +18,7 @@ describe Post do
       stub_social_media_requests do
         @post = create :post
       end
-      @tweet = Twitter::Tweet.new(id: 100)
+      @tweet = Twitter::Tweet.new id: 100
       expect_any_instance_of(Twitter::REST::Client)
         .to receive(:update)
         .with(@post.short_text)

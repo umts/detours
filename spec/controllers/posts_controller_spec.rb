@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 describe PostsController do
+  before(:each) { stub_social_media_requests! }
+
   describe 'POST #create' do
     before :each do
       @attributes = attributes_for :post
@@ -29,7 +31,7 @@ describe PostsController do
         request.env['HTTP_REFERER'] = @back
       end
       it 'does not create a post' do
-        expect { submit }.not_to change { User.count }
+        expect { submit }.not_to change { Post.count }
       end
       it 'gives some errors in the flash' do
         submit

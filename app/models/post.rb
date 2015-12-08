@@ -1,7 +1,6 @@
 include SocialMedia
 
 class Post < ActiveRecord::Base
-
   has_paper_trail
 
   has_and_belongs_to_many :routes
@@ -30,7 +29,7 @@ class Post < ActiveRecord::Base
 
   def current?
     (start_datetime.nil? || start_datetime <= DateTime.current) &&
-    (end_datetime.nil? || end_datetime >= DateTime.current)
+      (end_datetime.nil? || end_datetime >= DateTime.current)
   end
 
   def ended?
@@ -59,11 +58,7 @@ class Post < ActiveRecord::Base
   end
 
   def self.update_twitter!
-    current.where(twitter_post_id: nil).each do |post|
-      post.twitter_start!
-    end
-    ended.where(ending_twitter_post_id: nil).each do |post|
-      post.twitter_end!
-    end
+    current.where(twitter_post_id: nil).find_each(&:twitter_start!)
+    ended.where(ending_twitter_post_id: nil).find_each(&:twitter_end!)
   end
 end
