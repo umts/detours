@@ -22,3 +22,5 @@ Rails/HasAndBelongsToMany:
 Style/Documentation:
   Enabled: false
 
+Style/Lambda:
+  Enabled: false

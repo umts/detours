@@ -4,4 +4,8 @@ class User < ActiveRecord::Base
             format: { with: /\d{8}@umass.edu/,
                       message: 'must be 8 digits followed by @umass.edu' }
   validates :spire, :email, uniqueness: true
+
+  def full_name
+    "#{first_name} #{last_name}"
+  end
 end

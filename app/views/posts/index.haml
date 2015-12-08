@@ -1,0 +1,16 @@
+%h1.title Posts
+
+%table#posts
+  %tr
+    %th Routes
+    %th Text
+    %th Short text
+    %th Start datetime
+    %th End datetime
+  - @posts.each do |post|
+    %tr
+      %td= post.route_numbers
+      %td= post.text
+      %td= post.short_text
+      %td= format_datetime post.start_datetime
+      %td= format_datetime post.end_datetime
