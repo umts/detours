@@ -5,9 +5,9 @@
     .field
       .label= f.label :routes
       = f.select :routes,
-        @routes.map{|r| [r.number_and_name, r.id]},
-        {include_blank: 'Not route-specific'},
-        {multiple: true, size: 10}
+        @routes.map { |r| [r.number_and_name, r.id] },
+        { include_blank: 'Not route-specific' },
+        multiple: true, size: 10
     .field
       .label= f.label :text
       = f.text_area :text, placeholder: 'up to 1000 characters',
