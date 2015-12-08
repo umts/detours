@@ -19,6 +19,12 @@ group :production do
   gem 'exception_notification'
 end
 
+group :production, :development do
+  source 'https://rails-assets.org' do
+    gem 'rails-assets-datetimepicker'
+  end
+end
+
 group :development do
   gem 'capistrano', require: false
   gem 'capistrano-pending', require: false

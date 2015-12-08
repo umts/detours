@@ -6,4 +6,8 @@ class Route < ActiveRecord::Base
   validates :name, :number, :property, presence: true
   validates :property, inclusion: { in: PROPERTIES }
   validates :name, :number, uniqueness: true
+
+  def number_and_name
+    "#{number} - #{name}"
+  end
 end
