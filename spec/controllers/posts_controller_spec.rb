@@ -145,9 +145,7 @@ describe PostsController do
   describe 'POST #update' do
     before :each do
       @post = create :post
-      @changes = { text: 'Different text' }
-      # Controller expects stringified route IDs
-      @changes[:routes] = Array('')
+      @changes = { text: 'Different text', routes: [''] }
       when_current_user_is :whoever
     end
     let :submit do

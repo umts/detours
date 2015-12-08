@@ -49,13 +49,9 @@ class PostsController < ApplicationController
 
   def interpolate_routes
     @post_params = params.require(:post).permit!
-    @post_params[:routes] = if @post_params[:routes] == ['']
-      nil
-    else
-      @post_params.reject(&:blank?).map do |route_id|
-        Route.find route_id
-      end
+    @post_params[:routes].reject!(&:blank?)
+    @post_params[:routes].map! do |route_id|
+      Route.find route_id
     end
   end
-
 end
