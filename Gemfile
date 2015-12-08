@@ -15,6 +15,7 @@ gem 'sass-rails'
 gem 'snappconfig'
 gem 'twitter'
 gem 'uglifier'
+gem 'whenever'
 
 group :production do
   gem 'exception_notification'
@@ -45,4 +46,5 @@ group :development, :test do
   gem 'simplecov'
   gem 'spring'
   gem 'timecop'
+  gem 'webmock'
 end
