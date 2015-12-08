@@ -25,3 +25,5 @@
       %td= link_to 'Edit', edit_post_url(post)
       %td= button_to 'Delete', post_url(post), method: :delete
 = link_to 'New post', new_post_url
+
+= render 'scheduled'

@@ -14,6 +14,8 @@ class Post < ActiveRecord::Base
           DateTime.current, DateTime.current
   }
 
+  scope :upcoming, -> { where 'start_datetime > ?', DateTime.current }
+
   def route_numbers
     routes.pluck(:number).sort.join ', '
   end

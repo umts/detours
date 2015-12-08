@@ -1,0 +1,27 @@
+%h2.title Scheduled posts
+
+- if @scheduled_posts.present?
+  %table#scheduled
+    %tr
+      %th Routes
+      %th Text
+      %th Short text
+      %th Start datetime
+      %th End datetime
+      %th
+      %th
+    - @scheduled_posts.each do |post|
+      %tr
+        %td= post.route_numbers
+        %td= post.text
+        %td= post.short_text
+        %td= format_datetime post.start_datetime
+        %td
+          - if post.end_datetime.present?
+            = format_datetime post.end_datetime
+          - else
+            Never
+        %td= link_to 'Edit', edit_post_url(post)
+        %td= button_to 'Delete', post_url(post), method: :delete
+- else
+  No scheduled posts.

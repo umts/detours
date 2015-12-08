@@ -25,6 +25,7 @@ class PostsController < ApplicationController
 
   def index
     @posts = Post.current
+    @scheduled_posts = Post.upcoming
   end
 
   def new

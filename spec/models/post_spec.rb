@@ -40,6 +40,26 @@ describe Post do
       expect(call).to include no_start_or_end
     end
   end
+
+  describe 'upcoming' do
+    let :call do
+      Post.upcoming
+    end
+    it 'returns posts starting in the future regardless of when they end' do
+      current_post = create :post,
+                            start_datetime: 1.minute.ago
+      future_post = create :post,
+                           start_datetime: 1.minute.since
+      expect(call).to include future_post
+      expect(call).not_to include current_post
+    end
+    it 'does not return posts with no start datetime' do
+      post = create :post,
+                    start_datetime: nil
+      expect(call).not_to include post
+    end
+  end
+
   describe 'route_numbers' do
     before :each do
       route_1 = create :route, number: '1'
