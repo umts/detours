@@ -6,7 +6,6 @@ describe Post do
     allow_any_instance_of(Post).to receive :twitter_change!
     allow_any_instance_of(Post).to receive :twitter_end!
     allow_any_instance_of(Post).to receive :twitter_start!
-    allow(Post).to receive :update_twitter!
   end
 
   describe 'current' do
@@ -49,6 +48,11 @@ describe Post do
     end
   end
 
+  describe 'ended' do
+    it 'returns posts ending in the past regardless of when they start'
+    it 'does not return posts with no end datetime'
+  end
+
   describe 'upcoming' do
     let :call do
       Post.upcoming
@@ -66,6 +70,18 @@ describe Post do
                     start_datetime: nil
       expect(call).not_to include post
     end
+  end
+
+  describe 'current?' do
+    it 'returns true if post is ongoing'
+    it 'returns true if post has no start datetime and ends after today'
+    it 'returns true if post has no end datetime and starts before today'
+    it 'returns true if post has no start or end datetime'
+  end
+
+  describe 'ended?' do
+    it 'returns true if post ended in the past regardless of when it starts'
+    it 'returns false if post has no end datetime'
   end
 
   describe 'route_numbers' do
