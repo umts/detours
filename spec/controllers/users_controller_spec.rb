@@ -1,33 +1,33 @@
 require 'rails_helper'
 
-describe RoutesController do
+describe UsersController do
   describe 'POST #create' do
     before :each do
-      @attributes = attributes_for :route
+      @attributes = attributes_for :user
       when_current_user_is :whoever
     end
     let :submit do
-      post :create, route: @attributes
+      post :create, user: @attributes
     end
     context 'without errors' do
-      it 'creates a route' do
-        expect { submit }.to change { Route.count }.by 1
+      it 'creates a user' do
+        expect { submit }.to change { User.count }.by 1
       end
       it 'redirects to the index' do
         submit
-        expect(response).to redirect_to routes_url
+        expect(response).to redirect_to users_url
       end
     end
     context 'with errors' do
       before :each do
-        # invalid number
-        @attributes[:number] = nil
+        # invalid first name
+        @attributes[:first_name] = nil
         # Need an HTTP_REFERER for it to redirect back
         @back = 'http://test.host/redirect'
         request.env['HTTP_REFERER'] = @back
       end
-      it 'does not create a route' do
-        expect { submit }.not_to change { Route.count }
+      it 'does not create a user' do
+        expect { submit }.not_to change { User.count }
       end
       it 'gives some errors in the flash' do
         submit
@@ -42,38 +42,38 @@ describe RoutesController do
 
   describe 'DELETE #destroy' do
     before :each do
-      @route = create :route
+      @user = create :user
       when_current_user_is :whoever
     end
     let :submit do
-      delete :destroy, id: @route.id
+      delete :destroy, id: @user.id
     end
-    it 'finds the correct route' do
+    it 'finds the correct user' do
       submit
-      expect(assigns.fetch :route).to eql @route
+      expect(assigns.fetch :user).to eql @user
     end
-    it 'destroys the route' do
-      expect_any_instance_of(Route)
+    it 'destroys the user' do
+      expect_any_instance_of(User)
         .to receive :destroy
       submit
     end
     it 'redirects to the index' do
       submit
-      expect(response).to redirect_to routes_url
+      expect(response).to redirect_to users_url
     end
   end
 
   describe 'GET #edit' do
     before :each do
-      @route = create :route
+      @user = create :user
       when_current_user_is :whoever
     end
     let :submit do
-      get :edit, id: @route.id
+      get :edit, id: @user.id
     end
-    it 'finds the correct route' do
+    it 'finds the correct user' do
       submit
-      expect(assigns.fetch :route).to eql @route
+      expect(assigns.fetch :user).to eql @user
     end
     it 'renders the edit template' do
       submit
@@ -88,11 +88,11 @@ describe RoutesController do
     before :each do
       when_current_user_is :whoever
     end
-    it 'populates the routes variable with ordered routes' do
-      expect(Route).to receive(:order).with(:property, :number)
+    it 'populates the users variable with ordered users' do
+      expect(User).to receive(:order).with(:last_name, :first_name)
         .and_return 'whatever'
       submit
-      expect(assigns.fetch :routes).to eql 'whatever'
+      expect(assigns.fetch :users).to eql 'whatever'
     end
     it 'renders the index template' do
       submit
@@ -115,34 +115,34 @@ describe RoutesController do
 
   describe 'POST #update' do
     before :each do
-      @route = create :route
-      @changes = { name: 'Different name' }
+      @user = create :user
+      @changes = { first_name: 'Newname' }
       when_current_user_is :whoever
     end
     let :submit do
-      post :update, id: @route.id, route: @changes
+      post :update, id: @user.id, user: @changes
     end
     context 'without errors' do
-      it 'updates the route' do
+      it 'updates the user' do
         submit
-        expect(@route.reload.name).to eql @changes[:name]
+        expect(@user.reload.first_name).to eql @changes[:first_name]
       end
       it 'redirects to the index' do
         submit
-        expect(response).to redirect_to routes_url
+        expect(response).to redirect_to users_url
       end
     end
     context 'with errors' do
       before :each do
-        # incorrect name
-        @changes[:name] = nil
+        # incorrect first name
+        @changes[:first_name] = nil
         # Need an HTTP_REFERER for it to redirect back
         @back = 'http://test.host/redirect'
         request.env['HTTP_REFERER'] = @back
       end
-      it 'does not update the route' do
+      it 'does not update the user' do
         expect { submit }
-          .not_to change { @route.reload.name }
+          .not_to change { @user.reload.first_name }
       end
       it 'includes errors in the flash' do
         submit

@@ -1,0 +1,21 @@
+.form
+  = form_for user,
+    url: { controller: :users, action: action, id: user.id } do |f|
+    .field
+      .label= f.label :last_name
+      = f.text_field :last_name, required: true,
+        size: 50
+    .field
+      .label= f.label :first_name
+      = f.text_field :first_name, required: true,
+        size: 50
+    .field
+      .label= f.label :spire
+      = f.text_field :spire, required: true,
+        size: 50
+    .field
+      .label= f.label :email
+      = f.text_field :email, required: true,
+        size: 50
+    .actions
+      = f.submit "#{action.capitalize} user"

@@ -1,0 +1,19 @@
+%h1.title Users
+
+%table#users
+  %tr
+    %th Last name
+    %th First name
+    %th SPIRE
+    %th Email
+    %th
+    %th
+  - @users.each do |user|
+    %tr
+      %td= user.last_name
+      %td= user.first_name
+      %td= user.spire
+      %td= user.email
+      %td= link_to 'Edit', edit_user_url(user)
+      %td= button_to 'Delete', user_url(user), method: :delete
+= link_to 'New user', new_user_url
