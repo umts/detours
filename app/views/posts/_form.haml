@@ -4,7 +4,8 @@
     .field
       .label= f.label :routes
       = f.select :routes,
-        @routes.map { |r| [r.number_and_name, r.id] },
+        options_for_select(@routes.map { |r| [r.number_and_name, r.id] },
+                           f.object.routes.pluck(:id)),
         { include_blank: 'Not route-specific' },
         multiple: true, size: 10
     .field
@@ -24,4 +25,4 @@
       = f.text_field :end_datetime, class: 'datetimepicker',
         size: 50
     .actions
-      = f.submit 'Create post'
+      = f.submit "#{action.capitalize} post"

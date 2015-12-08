@@ -50,7 +50,7 @@ class PostsController < ApplicationController
 
   def with_routes(post_params)
     post_params[:routes] =
-      if post_params == Array("")
+      if post_params == Array('')
         nil
       else
         post_params[:routes].reject(&:blank?).map do |route_id|
