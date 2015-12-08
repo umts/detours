@@ -1,9 +1,9 @@
 class PostsController < ApplicationController
   before_action :find_post, only: [:destroy, :edit, :update]
+  before_action :interpolate_routes, only: [:create, :update]
 
   def create
-    post_params = params.require(:post).permit!
-    post = Post.new with_routes(post_params)
+    post = Post.new @post_params
     if post.save
       flash[:message] = 'Post has been created.'
       redirect_to posts_path
@@ -32,8 +32,7 @@ class PostsController < ApplicationController
   end
 
   def update
-    post_params = params.require(:post).permit!
-    if @post.update with_routes(post_params)
+    if @post.update @post_params
       flash[:message] = 'Post has been updated.'
       redirect_to posts_path
     else
@@ -48,15 +47,15 @@ class PostsController < ApplicationController
     @post = Post.find params.require(:id)
   end
 
-  def with_routes(post_params)
-    post_params[:routes] =
-      if post_params == Array('')
-        nil
-      else
-        post_params[:routes].reject(&:blank?).map do |route_id|
-          Route.find(route_id)
-        end
+  def interpolate_routes
+    @post_params = params.require(:post).permit!
+    @post_params[:routes] = if @post_params[:routes] == ['']
+      nil
+    else
+      @post_params.reject(&:blank?).map do |route_id|
+        Route.find route_id
       end
-    post_params
+    end
   end
+
 end
