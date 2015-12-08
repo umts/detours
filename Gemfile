@@ -13,6 +13,7 @@ gem 'rails', '~> 4.2'
 gem 'rubocop'
 gem 'sass-rails'
 gem 'snappconfig'
+gem 'twitter'
 gem 'uglifier'
 
 group :production do
