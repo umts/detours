@@ -3,11 +3,8 @@ require 'rails_helper'
 # In this file, rather than globally stubbing out Twitter API requests,
 # we stub them out only in before blocks, so that the call will still be made
 # in the actual specs (so we can explicitly MOCK those).
-#
-# We don't test update_twitter since all it does is call already tested
-# AR scopes or twitter methods.
 
-describe Post do
+describe 'Twitter API requests' do
   describe 'twitter_change!' do
     before :each do
       stub_social_media_requests do
@@ -65,6 +62,47 @@ describe Post do
       @post.twitter_start!
 
       expect(@post.twitter_post_id).to eql 100
+    end
+  end
+
+  describe 'self.update_twitter!' do
+    it 'calls twitter_start! on current posts which have not been tweeted' do
+      stub_social_media_requests do
+        create :post, start_datetime: 1.minute.ago, end_datetime: 1.day.since,
+                      twitter_post_id: nil
+      end
+      expect_any_instance_of(Post)
+        .to receive(:twitter_start!)
+        .and_return nil
+      Post.update_twitter!
+    end
+    it "doesn't call twitter_start! on current posts which have been tweeted" do
+      stub_social_media_requests do
+        create :post, start_datetime: 1.minute.ago, end_datetime: 1.day.since,
+                      twitter_post_id: 100
+      end
+      expect_any_instance_of(Post)
+        .not_to receive :twitter_start!
+      Post.update_twitter!
+    end
+    it 'calls twitter_end! on ended posts which have not been end tweeted' do
+      stub_social_media_requests do
+        create :post, start_datetime: 1.day.ago, end_datetime: 1.minute.ago,
+                      ending_twitter_post_id: nil
+      end
+      expect_any_instance_of(Post)
+        .to receive(:twitter_end!)
+        .and_return nil
+      Post.update_twitter!
+    end
+    it "doesn't call twitter_end! on ended posts which have been end tweeted" do
+      stub_social_media_requests do
+        create :post, start_datetime: 1.day.ago, end_datetime: 1.minute.ago,
+                      ending_twitter_post_id: 100
+      end
+      expect_any_instance_of(Post)
+        .not_to receive :twitter_end!
+      Post.update_twitter!
     end
   end
 end
