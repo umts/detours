@@ -43,8 +43,9 @@ class Post < ActiveRecord::Base
   # TODO: decide if we actually want to delete tweets
   def twitter_change!
     tweet = twitter_client.status twitter_post_id
-    client.destroy_status tweet
-    tweet_start!
+    twitter_client.destroy_status tweet
+    update twitter_post_id: nil
+    twitter_start!
   end
 
   def twitter_end!

@@ -7,28 +7,60 @@ require 'rails_helper'
 describe Post do
   describe 'twitter_change!' do
     before :each do
+      stub_social_media_requests do
+        @post = create :post
+      end
+    end
+    it 'deletes the existing tweet, clears the ID, and calls twitter_start!' do
+      expect_any_instance_of(Twitter::REST::Client)
+        .to receive(:status)
+        .with(@post.twitter_post_id)
+        .and_return 'a tweet'
+      expect_any_instance_of(Twitter::REST::Client)
+        .to receive(:destroy_status)
+        .with 'a tweet'
+      expect_any_instance_of(Post).to receive :twitter_start!
 
+      @post.twitter_change!
+
+      expect(@post.reload.twitter_post_id).to eql nil
     end
   end
 
-  describe 'twitter_end!'
+  describe 'twitter_end!' do
+    before :each do
+      stub_social_media_requests do
+        @post = create :post
+      end
+    end
+    it 'creates a tweek with the short ending text and saves the ID' do
+      tweet = Twitter::Tweet.new id: 100
+      expect_any_instance_of(Twitter::REST::Client)
+        .to receive(:update)
+        .with(@post.short_ending_text)
+        .and_return tweet
+
+      @post.twitter_end!
+
+      expect(@post.ending_twitter_post_id).to eql 100
+    end
+  end
 
   describe 'twitter_start!' do
     before :each do
       stub_social_media_requests do
         @post = create :post
       end
-      @tweet = Twitter::Tweet.new id: 100
+    end
+    it 'creates a tweet with the short text and saves the ID' do
+      tweet = Twitter::Tweet.new id: 100
       expect_any_instance_of(Twitter::REST::Client)
         .to receive(:update)
         .with(@post.short_text)
-        .and_return @tweet
-    end
-    let :call do
+        .and_return tweet
+
       @post.twitter_start!
-    end
-    it 'creates a tweet with the short text and saves the ID' do
-      call
+
       expect(@post.twitter_post_id).to eql 100
     end
   end
