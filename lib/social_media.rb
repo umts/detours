@@ -14,12 +14,12 @@ module SocialMedia
   def facebook_end!
     facebook_client.put_comment facebook_post_id, ending_text
     ending_post = facebook_client.put_wall_post ending_text
-    update ending_facebook_post_id: ending_post.id
+    update ending_facebook_post_id: ending_post[:id]
   end
 
   def facebook_start!
     post = facebook_client.put_wall_post text
-    update facebook_post_id: post.id
+    update facebook_post_id: post[:id]
   end
 
   # TODO: decide if we actually want to delete tweets

@@ -33,7 +33,7 @@ describe 'Twitter API requests' do
         @post = create :post
       end
     end
-    it 'creates a tweek with the short ending text and saves the ID' do
+    it 'creates a tweet with the short ending text and saves the ID' do
       tweet = Twitter::Tweet.new id: 100
       expect_any_instance_of(Twitter::REST::Client)
         .to receive(:update)
