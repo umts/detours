@@ -1,3 +1,6 @@
+facebook:
+  oauth_access_token: "TODO"
+
 twitter:
   consumer_key: "TODO"
   consumer_secret: "TODO"

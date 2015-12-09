@@ -1,4 +1,9 @@
 module SocialMedia
+  def facebook_client
+    facebook_config = CONFIG.fetch :facebook
+    Koala::Facebook::API.new(facebook_config.fetch :oauth_access_token)
+  end
+
   # TODO: decide if we actually want to delete tweets
   def twitter_change!
     tweet = twitter_client.status twitter_post_id
