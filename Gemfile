@@ -40,6 +40,7 @@ group :development, :test do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'codeclimate-test-reporter'
+  gem 'fuubar'
   gem 'mocha'
   gem 'pry-byebug'
   gem 'rspec-html-matchers'
