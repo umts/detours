@@ -14,71 +14,48 @@ describe Post do
       @future_post = create :post,
                             start_datetime: 1.day.since,
                             end_datetime: 2.weeks.since
-    end
-    let :call do
-      Post.current
-    end
-    it 'returns ongoing posts' do
-      expect(call).not_to include @old_post
-      expect(call).to include @current_post
-      expect(call).not_to include @future_post
-    end
-    it 'returns posts with no start datetime ending after today' do
-      no_start = create :post,
+      @no_start = create :post,
                         start_datetime: nil,
                         end_datetime: 1.day.since
-      expect(call).to include no_start
-    end
-    it 'returns posts with no end datetime starting before today' do
-      no_end = create :post,
+      @no_end = create :post,
                       start_datetime: 1.day.ago,
                       end_datetime: nil
-      expect(call).to include no_end
-    end
-    it 'returns posts with no start datetime or end datetime' do
-      no_start_or_end = create :post,
+      @no_start_or_end = create :post,
                                start_datetime: nil,
                                end_datetime: nil
-      expect(call).to include no_start_or_end
     end
+    subject { Post.current }
+    it { is_expected.not_to include @old_post, @future_post }
+    it { is_expected.to include @current_post }
+    it { is_expected.to include @no_start, @no_end, @no_start_or_end }
   end
 
   describe 'ended' do
-    let :call do
-      Post.ended
-    end
-    it 'returns posts ending in the past regardless of when they start' do
-      current_post = create :post,
+    before :each do
+      @current_post = create :post,
                             end_datetime: 1.minute.since
-      past_post = create :post,
+      @past_post = create :post,
                          end_datetime: 1.minute.ago
-      expect(call).to include past_post
-      expect(call).not_to include current_post
-    end
-    it 'does not return posts with no end datetime' do
-      post = create :post,
+      @no_end = create :post,
                     end_datetime: nil
-      expect(call).not_to include post
     end
+    subject { Post.ended }
+    it { is_expected.to include @past_post }
+    it { is_expected.not_to include @current_post, @no_end }
   end
 
   describe 'upcoming' do
-    let :call do
-      Post.upcoming
-    end
-    it 'returns posts starting in the future regardless of when they end' do
-      current_post = create :post,
+    before :each do
+      @current_post = create :post,
                             start_datetime: 1.minute.ago
-      future_post = create :post,
+      @future_post = create :post,
                            start_datetime: 1.minute.since
-      expect(call).to include future_post
-      expect(call).not_to include current_post
-    end
-    it 'does not return posts with no start datetime' do
-      post = create :post,
+      @no_start = create :post,
                     start_datetime: nil
-      expect(call).not_to include post
     end
+    subject { Post.upcoming }
+    it { is_expected.to include @future_post }
+    it { is_expected.not_to include @current_post, @no_start }
   end
 
   describe 'current?' do
