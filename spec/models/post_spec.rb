@@ -145,7 +145,7 @@ describe Post do
     end
   end
 
-  describe 'self.json' do
+  describe 'self.json' do # XML follows the same format
     before :each do
       @route = create :route
       @post = create :post, routes: [@route]
@@ -167,18 +167,5 @@ describe Post do
       expect(post).not_to have_key 'facebook_post_id'
       expect(post).not_to have_key 'twitter_post_id'
     end
-  end
-
-  describe 'self.xml' do
-    before :each do
-      @route = create :route
-      @post = create :post, routes: [@route]
-    end
-    let :call do
-      Nokogiri::XML.parse Post.xml
-    end
-    it 'includes route name, number, and property' do
-    end
-    it 'excludes social media IDs from posts'
   end
 end
