@@ -45,4 +45,12 @@ class Post < ActiveRecord::Base
   def route_numbers
     routes.pluck(:number).sort.join ', '
   end
+
+  def self.json
+    Route.joins(:posts).to_json include: { posts: { only: :text } }
+  end
+
+  def self.xml
+    Route.joins(:posts).to_xml include:  { posts: { only: :text } }
+  end
 end

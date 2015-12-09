@@ -3,6 +3,42 @@ require 'rails_helper'
 describe PostsController do
   before(:each) { stub_social_media_requests! }
 
+  describe 'GET #all' do
+    before :each do
+      # These tests are only substantive if we have some routes and posts.
+      5.times { create :post, routes: [create(:route)] }
+    end
+    let :submit do
+      get :all, format: @format
+    end
+    context 'JSON format' do
+      before :each do
+        @format = :json
+      end
+      it 'requires no authentication' do
+        submit
+        expect(response).not_to have_http_status :unauthorized
+      end
+      it 'renders Post.json' do
+        submit
+        expect(response.body).to eql Post.json
+      end
+    end
+    context 'XML format' do
+      before :each do
+        @format = :xml
+      end
+      it 'requires no authentication' do
+        submit
+        expect(response).not_to have_http_status :unauthorized
+      end
+      it 'renders Post.xml' do
+        submit
+        expect(response.body).to eql Post.xml
+      end
+    end
+  end
+
   describe 'POST #create' do
     before :each do
       @attributes = attributes_for :post

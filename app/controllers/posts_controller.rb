@@ -1,6 +1,14 @@
 class PostsController < ApplicationController
   before_action :find_post, only: [:destroy, :edit, :update]
   before_action :interpolate_routes, only: [:create, :update]
+  skip_before_action :set_current_user, only: :all
+
+  def all # public endpoint
+    respond_to do |format|
+      format.json { render json: Post.json }
+      format.xml  { render xml:  Post.xml }
+    end
+  end
 
   def create
     post = Post.new @post_params

@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
   root 'posts#index'
 
-  resources :posts,  except: :show
+  resources :posts,  except: :show do
+    collection do
+      get :all
+    end
+  end
   resources :routes, except: :show
   resources :users, except: :show
 

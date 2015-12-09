@@ -144,4 +144,41 @@ describe Post do
       expect(@post.route_numbers).to eql '1, 2'
     end
   end
+
+  describe 'self.json' do
+    before :each do
+      @route = create :route
+      @post = create :post, routes: [@route]
+    end
+    let :call do
+      JSON.parse Post.json
+    end
+    it 'includes route name, number, and property' do
+      route = call.first
+      expect(route).to have_key 'name'
+      expect(route).to have_key 'number'
+      expect(route).to have_key 'property'
+    end
+    it 'excludes social media IDs from posts' do
+      route = call.first
+      expect(route).to have_key 'posts'
+      post = call.first['posts'].first
+      expect(post).to have_key 'text'
+      expect(post).not_to have_key 'facebook_post_id'
+      expect(post).not_to have_key 'twitter_post_id'
+    end
+  end
+
+  describe 'self.xml' do
+    before :each do
+      @route = create :route
+      @post = create :post, routes: [@route]
+    end
+    let :call do
+      Nokogiri::XML.parse Post.xml
+    end
+    it 'includes route name, number, and property' do
+    end
+    it 'excludes social media IDs from posts'
+  end
 end
