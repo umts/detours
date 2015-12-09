@@ -23,7 +23,7 @@ describe 'Twitter API requests' do
 
       @post.twitter_change!
 
-      expect(@post.reload.twitter_post_id).to eql nil
+      expect(@post.reload.twitter_post_id).to be nil
     end
   end
 

@@ -19,7 +19,7 @@ describe 'Facebook API requests' do
 
       @post.facebook_change!
 
-      expect(@post.reload.facebook_post_id).to eql nil
+      expect(@post.reload.facebook_post_id).to be nil
     end
   end
 
