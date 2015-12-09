@@ -1,3 +1,3 @@
 every 15.minutes do
-  runner 'Post.update_twitter!'
+  runner 'SocialMedia.update_twitter!'
 end

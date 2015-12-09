@@ -74,7 +74,7 @@ describe 'Twitter API requests' do
       expect_any_instance_of(Post)
         .to receive(:twitter_start!)
         .and_return nil
-      Post.update_twitter!
+      SocialMedia.update_twitter!
     end
     it "doesn't call twitter_start! on current posts which have been tweeted" do
       stub_social_media_requests do
@@ -83,7 +83,7 @@ describe 'Twitter API requests' do
       end
       expect_any_instance_of(Post)
         .not_to receive :twitter_start!
-      Post.update_twitter!
+      SocialMedia.update_twitter!
     end
     it 'calls twitter_end! on ended posts which have not been end tweeted' do
       stub_social_media_requests do
@@ -93,7 +93,7 @@ describe 'Twitter API requests' do
       expect_any_instance_of(Post)
         .to receive(:twitter_end!)
         .and_return nil
-      Post.update_twitter!
+      SocialMedia.update_twitter!
     end
     it "doesn't call twitter_end! on ended posts which have been end tweeted" do
       stub_social_media_requests do
@@ -102,7 +102,7 @@ describe 'Twitter API requests' do
       end
       expect_any_instance_of(Post)
         .not_to receive :twitter_end!
-      Post.update_twitter!
+      SocialMedia.update_twitter!
     end
   end
 end
