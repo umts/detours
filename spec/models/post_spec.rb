@@ -153,19 +153,31 @@ describe Post do
     let :call do
       JSON.parse Post.json
     end
-    it 'includes route name, number, and property' do
-      route = call.first
-      expect(route).to have_key 'name'
-      expect(route).to have_key 'number'
-      expect(route).to have_key 'property'
+    it 'includes current posts' do
+      expect(Post).to receive :current
+      Post.json # don't parse here since we mock
+    end
+    it 'includes post text' do
+      post = call.first
+      expect(post.fetch 'text').to eql @post.text
     end
     it 'excludes social media IDs from posts' do
-      route = call.first
-      expect(route).to have_key 'posts'
-      post = call.first['posts'].first
-      expect(post).to have_key 'text'
+      post = call.first
       expect(post).not_to have_key 'facebook_post_id'
       expect(post).not_to have_key 'twitter_post_id'
+      expect(post).not_to have_key 'ending_facebook_post_id'
+      expect(post).not_to have_key 'ending_twitter_post_id'
+    end
+    it 'includes route name, number, and property' do
+      route = call.first.fetch('routes').first
+      expect(route.fetch 'name').to eql @route.name
+      expect(route.fetch 'number').to eql @route.number
+      expect(route.fetch 'property').to eql @route.property
+    end
+    it 'includes posts with no routes' do
+      @post.update routes: []
+      post = call.first
+      expect(post.fetch 'text').to eql @post.text
     end
   end
 end

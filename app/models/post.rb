@@ -47,10 +47,10 @@ class Post < ActiveRecord::Base
   end
 
   def self.json
-    Route.joins(:posts).to_json include: { posts: { only: :text } }
+    current.to_json only: :text, include: { routes: { except: :id } }
   end
 
   def self.xml
-    Route.joins(:posts).to_xml include: { posts: { only: :text } }
+    current.to_xml only: :text, include: { routes: { except: :id } }
   end
 end

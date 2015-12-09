@@ -2,6 +2,7 @@ require 'rails_helper'
 
 describe PostsController do
   before(:each) { stub_social_media_requests! }
+  after(:each)  { unstub_social_media_requests! }
 
   describe 'GET #all' do
     before :each do

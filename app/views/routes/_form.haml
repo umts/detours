@@ -1,6 +1,6 @@
 .form
   = form_for route,
-    url: { controller: :routes, action: action, id: route.id } do |f|
+    url: { controller: :routes, action: action, id: route.number } do |f|
     .field
       .label= f.label :name
       = f.text_field :name, required: true,

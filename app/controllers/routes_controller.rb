@@ -1,5 +1,13 @@
 class RoutesController < ApplicationController
-  before_action :find_route, only: [:destroy, :edit, :update]
+  before_action :find_route, only: [:destroy, :edit, :posts, :update]
+  skip_before_action :set_current_user, only: [:all, :posts]
+
+  def all
+    respond_to do |format|
+      format.json { render json: Route.all }
+      format.xml  { render xml:  Route.all }
+    end
+  end
 
   def create
     route_params = params.require(:route).permit!
@@ -29,6 +37,13 @@ class RoutesController < ApplicationController
   def new
   end
 
+  def posts
+    respond_to do |format|
+      format.json { render json: @route.posts, only: :text }
+      format.xml  { render xml:  @route.posts, only: :text }
+    end
+  end
+
   def update
     route_params = params.require(:route).permit!
     if @route.update route_params
@@ -43,6 +58,8 @@ class RoutesController < ApplicationController
   private
 
   def find_route
-    @route = Route.find params.require(:id)
+    @route = Route.find_by number: params.require(:id)
+    raise ActiveRecord::RecordNotFound,
+          "Couldn't find route with number #{params.fetch :id}" if @route.nil?
   end
 end

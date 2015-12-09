@@ -6,7 +6,14 @@ Rails.application.routes.draw do
       get :all
     end
   end
-  resources :routes, except: :show
+  resources :routes, except: :show do
+    collection do
+      get :all
+    end
+    member do
+      get :posts
+    end
+  end
   resources :users, except: :show
 
   unless Rails.env.production?
