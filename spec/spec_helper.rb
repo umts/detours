@@ -10,11 +10,11 @@ SimpleCov.start do
   add_filter '/spec/'
 end
 
-WebMock.disable_net_connect! allow_localhost: true
 
 RSpec.configure do |config|
   config.before :all do
     FactoryGirl.reload
+    WebMock.disable_net_connect! allow_localhost: true
   end
   config.include FactoryGirl::Syntax::Methods
   config.expect_with :rspec do |expectations|

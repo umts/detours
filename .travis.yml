@@ -5,7 +5,7 @@ env: 'CODECLIMATE_REPO_TOKEN=e85760f7eee4b75c633f71ad8306be17d9917927d29b7df8abc
 before_script:
   - cp config/application.yml.example config/application.yml
   - cp config/database.yml.example config/database.yml
-  - mysql -e 'create database screaming_dinosaur_test'
+  - mysql -e 'create database detours_test'
 script: 'bundle exec rake travis'
 notifications:
   email:
