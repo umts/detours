@@ -51,6 +51,6 @@ class Post < ActiveRecord::Base
   end
 
   def self.xml
-    Route.joins(:posts).to_xml include:  { posts: { only: :text } }
+    Route.joins(:posts).to_xml include: { posts: { only: :text } }
   end
 end
