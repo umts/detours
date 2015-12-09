@@ -17,10 +17,11 @@ class Post < ActiveRecord::Base
   after_create :facebook_start!, if: :current?
   after_update :facebook_change!, if: -> { current? && short_text_changed? }
   after_update :facebook_end!,
-               if: -> { ended? && ending_facebook_post_id.blank? }
+               if: -> { has_ended? && ending_facebook_post_id.blank? }
   after_create :twitter_start!, if: :current?
   after_update :twitter_change!, if: -> { current? && short_text_changed? }
-  after_update :twitter_end!, if: -> { ended? && ending_twitter_post_id.blank? }
+  after_update :twitter_end!,
+               if: -> { has_ended? && ending_twitter_post_id.blank? }
 
   scope :current, -> {
     where '(start_datetime is null or start_datetime <= ?) and ' \
@@ -37,7 +38,7 @@ class Post < ActiveRecord::Base
       (end_datetime.nil? || end_datetime >= DateTime.current)
   end
 
-  def ended?
+  def has_ended?
     return false if end_datetime.blank?
     end_datetime < DateTime.current
   end

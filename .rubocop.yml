@@ -25,5 +25,8 @@ Style/Documentation:
 Style/Lambda:
   Enabled: false
 
+Style/PredicateName:
+  Enabled: false
+
 Style/SignalException:
   Enabled: false

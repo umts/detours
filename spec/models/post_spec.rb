@@ -94,43 +94,43 @@ describe Post do
                             end_datetime: 2.weeks.since
     end
     it 'returns true if post is ongoing' do
-      expect(@old_post.current?).to eql false
-      expect(@current_post.current?).to eql true
-      expect(@future_post.current?).to eql false
+      expect(@old_post).not_to be_current
+      expect(@current_post).to be_current
+      expect(@future_post).not_to be_current
     end
     it 'returns true if post has no start datetime and ends after today' do
       no_start = create :post,
                         start_datetime: nil,
                         end_datetime: 1.day.since
-      expect(no_start.current?).to eql true
+      expect(no_start).to be_current
     end
     it 'returns true if post has no end datetime and starts before today' do
       no_end = create :post,
                       start_datetime: 1.day.ago,
                       end_datetime: nil
-      expect(no_end.current?).to eql true
+      expect(no_end).to be_current
     end
     it 'returns true if post has no start or end datetime' do
       no_start_or_end = create :post,
                                start_datetime: nil,
                                end_datetime: nil
-      expect(no_start_or_end.current?).to eql true
+      expect(no_start_or_end).to be_current
     end
   end
 
-  describe 'ended?' do
+  describe 'has_ended?' do
     it 'returns true if post ended in the past regardless of when it starts' do
       current_post = create :post,
                             end_datetime: 1.minute.since
       past_post = create :post,
                          end_datetime: 1.minute.ago
-      expect(past_post.ended?).to eql true
-      expect(current_post.ended?).to eql false
+      expect(past_post).to have_ended
+      expect(current_post).not_to have_ended
     end
     it 'returns false if post has no end datetime' do
       post = create :post,
                     end_datetime: nil
-      expect(post.ended?).to eql false
+      expect(post).not_to have_ended
     end
   end
 
