@@ -15,14 +15,14 @@ describe Post do
                             start_datetime: 1.day.since,
                             end_datetime: 2.weeks.since
       @no_start = create :post,
-                        start_datetime: nil,
-                        end_datetime: 1.day.since
+                         start_datetime: nil,
+                         end_datetime: 1.day.since
       @no_end = create :post,
-                      start_datetime: 1.day.ago,
-                      end_datetime: nil
+                       start_datetime: 1.day.ago,
+                       end_datetime: nil
       @no_start_or_end = create :post,
-                               start_datetime: nil,
-                               end_datetime: nil
+                                start_datetime: nil,
+                                end_datetime: nil
     end
     subject { Post.current }
     it { is_expected.not_to include @old_post, @future_post }
@@ -33,11 +33,11 @@ describe Post do
   describe 'ended' do
     before :each do
       @current_post = create :post,
-                            end_datetime: 1.minute.since
+                             end_datetime: 1.minute.since
       @past_post = create :post,
-                         end_datetime: 1.minute.ago
+                          end_datetime: 1.minute.ago
       @no_end = create :post,
-                    end_datetime: nil
+                       end_datetime: nil
     end
     subject { Post.ended }
     it { is_expected.to include @past_post }
@@ -47,11 +47,11 @@ describe Post do
   describe 'upcoming' do
     before :each do
       @current_post = create :post,
-                            start_datetime: 1.minute.ago
+                             start_datetime: 1.minute.ago
       @future_post = create :post,
-                           start_datetime: 1.minute.since
+                            start_datetime: 1.minute.since
       @no_start = create :post,
-                    start_datetime: nil
+                         start_datetime: nil
     end
     subject { Post.upcoming }
     it { is_expected.to include @future_post }

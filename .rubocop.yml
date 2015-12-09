@@ -6,6 +6,7 @@ AllCops:
     - 'db/**/*'
     - 'script/**/*'
     - 'vendor/**/*'
+    - 'Guardfile'
 
 Metrics/AbcSize:
   Max: 20
