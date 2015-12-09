@@ -47,5 +47,4 @@ group :development, :test do
   gem 'simplecov'
   gem 'spring'
   gem 'timecop'
-  gem 'webmock'
 end

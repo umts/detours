@@ -1,7 +1,6 @@
 require 'codeclimate-test-reporter'
 require 'factory_girl_rails'
 require 'simplecov'
-require 'webmock/rspec'
 
 CodeClimate::TestReporter.start if ENV['CI']
 SimpleCov.start 'rails'
@@ -13,10 +12,6 @@ end
 RSpec.configure do |config|
   config.before :all do
     FactoryGirl.reload
-    WebMock.disable_net_connect! allow_localhost: true
-  end
-  config.after :all do
-    WebMock.allow_net_connect!
   end
   config.include FactoryGirl::Syntax::Methods
   config.expect_with :rspec do |expectations|
