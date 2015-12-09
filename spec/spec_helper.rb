@@ -32,15 +32,27 @@ def stub_social_media_requests(&block)
 end
 
 def stub_social_media_requests!
-  allow_any_instance_of(Post).to receive :twitter_change!
-  allow_any_instance_of(Post).to receive :twitter_end!
-  allow_any_instance_of(Post).to receive :twitter_start!
+  methods = %i(facebook_change!
+               facebook_end!
+               facebook_start!
+               twitter_change!
+               twitter_end!
+               twitter_start!)
+  methods.each do |method|
+    allow_any_instance_of(Post).to receive method
+  end
 end
 
 def unstub_social_media_requests!
-  allow_any_instance_of(Post).to receive(:twitter_change!).and_call_original
-  allow_any_instance_of(Post).to receive(:twitter_end!).and_call_original
-  allow_any_instance_of(Post).to receive(:twitter_start!).and_call_original
+  methods = %i(facebook_change!
+               facebook_end!
+               facebook_start!
+               twitter_change!
+               twitter_end!
+               twitter_start!)
+  methods.each do |method|
+    allow_any_instance_of(Post).to receive(method).and_call_original
+  end
 end
 
 def when_current_user_is(user)

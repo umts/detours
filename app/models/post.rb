@@ -14,6 +14,10 @@ class Post < ActiveRecord::Base
             uniqueness: true, allow_blank: true
 
   # Social media callbacks
+  after_create :facebook_start!, if: :current?
+  after_update :facebook_change!, if: -> { current? && short_text_changed? }
+  after_update :facebook_end!,
+               if: -> { ended? && ending_facebook_post_id.blank? }
   after_create :twitter_start!, if: :current?
   after_update :twitter_change!, if: -> { current? && short_text_changed? }
   after_update :twitter_end!, if: -> { ended? && ending_twitter_post_id.blank? }
