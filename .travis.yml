@@ -1,6 +1,5 @@
 language: ruby
-rvm:
-  - 2.2.3
+rvm: 2.2.3
 env: 'CODECLIMATE_REPO_TOKEN=e85760f7eee4b75c633f71ad8306be17d9917927d29b7df8abc679fcffcf296d'
 before_script:
   - cp config/application.yml.example config/application.yml
