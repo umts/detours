@@ -3,7 +3,7 @@ require 'rails_helper'
 describe Post do
   before(:each) { stub_social_media_requests! }
 
-  describe 'current' do
+  describe 'Post.current' do
     before :each do
       @old_post = create :post,
                          start_datetime: 2.weeks.ago,
@@ -112,13 +112,11 @@ describe Post do
   end
 
   describe 'route_numbers' do
-    before :each do
-      route_1 = create :route, number: '1'
-      route_2 = create :route, number: '2'
-      @post = create :post, routes: [route_1, route_2]
-    end
+    let(:route_1) { create :route, number: '1' }
+    let(:route_2) { create :route, number: '2' }
+    let(:post) { create :post, routes: [route_1, route_2] }
     it 'returns comma-separated route numbers' do
-      expect(@post.route_numbers).to eql '1, 2'
+      expect(post.route_numbers).to eql '1, 2'
     end
   end
 
