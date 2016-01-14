@@ -42,7 +42,7 @@ describe 'Twitter API requests' do
 
       @post.twitter_end!
 
-      expect(@post.ending_twitter_post_id).to eql 100
+      expect(@post.ending_twitter_post_id).to be 100
     end
   end
 
@@ -61,7 +61,7 @@ describe 'Twitter API requests' do
 
       @post.twitter_start!
 
-      expect(@post.twitter_post_id).to eql 100
+      expect(@post.twitter_post_id).to be 100
     end
   end
 
