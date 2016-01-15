@@ -22,20 +22,11 @@ describe UsersController do
       before :each do
         # invalid first name
         @attributes[:first_name] = nil
-        # Need an HTTP_REFERER for it to redirect back
-        @back = 'http://test.host/redirect'
-        request.env['HTTP_REFERER'] = @back
       end
-      it 'does not create a user' do
+      it 'does not create a user, gives errors, and redirects back' do
+        expect { submit }.to redirect_back
         expect { submit }.not_to change { User.count }
-      end
-      it 'gives some errors in the flash' do
-        submit
         expect(flash[:errors]).not_to be_empty
-      end
-      it 'redirects back' do
-        submit
-        expect(response).to redirect_to @back
       end
     end
   end
@@ -136,21 +127,12 @@ describe UsersController do
       before :each do
         # incorrect first name
         @changes[:first_name] = nil
-        # Need an HTTP_REFERER for it to redirect back
-        @back = 'http://test.host/redirect'
-        request.env['HTTP_REFERER'] = @back
       end
-      it 'does not update the user' do
+      it 'does not update the user, gives flash errors, and redirects back' do
+        expect { submit }.to redirect_back
         expect { submit }
           .not_to change { @user.reload.first_name }
-      end
-      it 'includes errors in the flash' do
-        submit
         expect(flash[:errors]).not_to be_empty
-      end
-      it 'redirects back' do
-        submit
-        expect(response).to redirect_to @back
       end
     end
   end

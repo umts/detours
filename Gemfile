@@ -48,4 +48,5 @@ group :development, :test do
   gem 'simplecov', require: false
   gem 'timecop'
   gem 'umts-custom-cops'
+  gem 'umts-custom-matchers'
 end
