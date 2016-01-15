@@ -314,6 +314,8 @@ GEM
     uglifier (2.7.2)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
+    umts-custom-matchers (0.1.2)
+      rspec-rails
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.1)
@@ -357,6 +359,7 @@ DEPENDENCIES
   timecop
   twitter
   uglifier
+  umts-custom-matchers
   whenever
 
 BUNDLED WITH

@@ -47,4 +47,5 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'simplecov', require: false
   gem 'timecop'
+  gem 'umts-custom-matchers'
 end
