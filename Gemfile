@@ -11,7 +11,6 @@ gem 'koala'
 gem 'mysql'
 gem 'paper_trail'
 gem 'rails', '~> 4.2'
-gem 'rubocop'
 gem 'sass-rails'
 gem 'snappconfig'
 gem 'twitter'
@@ -45,6 +44,9 @@ group :development, :test do
   gem 'mocha'
   gem 'pry-byebug', require: false
   gem 'rspec-rails'
+  gem 'rubocop'
   gem 'simplecov', require: false
   gem 'timecop'
+  gem 'umts-custom-cops'
+  gem 'umts-custom-matchers'
 end

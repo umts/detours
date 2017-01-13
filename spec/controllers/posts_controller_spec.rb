@@ -63,20 +63,11 @@ describe PostsController do
       before :each do
         # invalid text
         @attributes[:text] = nil
-        # Need an HTTP_REFERER for it to redirect back
-        @back = 'http://test.host/redirect'
-        request.env['HTTP_REFERER'] = @back
       end
-      it 'does not create a post' do
+      it 'does not create a post, gives flash errors, and redirects back' do
+        expect { submit }.to redirect_back
         expect { submit }.not_to change { Post.count }
-      end
-      it 'gives some errors in the flash' do
-        submit
         expect(flash[:errors]).not_to be_empty
-      end
-      it 'redirects back' do
-        submit
-        expect(response).to redirect_to @back
       end
     end
   end
@@ -204,21 +195,12 @@ describe PostsController do
       before :each do
         # incorrect text
         @changes[:text] = nil
-        # Need an HTTP_REFERER for it to redirect back
-        @back = 'http://test.host/redirect'
-        request.env['HTTP_REFERER'] = @back
       end
-      it 'does not update the post' do
+      it 'does not update post, includes flash errors, and redirects back' do
+        expect { submit }.to redirect_back
         expect { submit }
           .not_to change { @post.reload.text }
-      end
-      it 'includes errors in the flash' do
-        submit
         expect(flash[:errors]).not_to be_empty
-      end
-      it 'redirects back' do
-        submit
-        expect(response).to redirect_to @back
       end
     end
   end
